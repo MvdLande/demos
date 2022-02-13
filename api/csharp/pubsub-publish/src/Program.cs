@@ -7,7 +7,7 @@ namespace toit.demos.api.csharp.pubsubpublish
 {
     public class Program
     {
-        private static string apikey = "<apikey>"; // From: https://console.toit.io/project/apikeys
+        private static string apikey = "<API Key Secret>"; // From: https://console.toit.io/project/apikeys
         static async Task Main(string[] args)
         {
             var callCredentials = CallCredentials.FromInterceptor((context, metadata) =>
@@ -21,9 +21,9 @@ namespace toit.demos.api.csharp.pubsubpublish
                 Credentials = channelCredentials
             });
 
-            var client = new Toit.Api.Pubsub.Publish.PublishClient(channel);
+            var client = new Toit.Proto.API.PubSub.Publish.PublishClient(channel);
 
-            var request = new Toit.Api.Pubsub.PublishRequest
+            var request = new Toit.Proto.API.PubSub.PublishRequest
             {
                 Topic = "cloud:hello-world",
                 PublisherName = "C#",
