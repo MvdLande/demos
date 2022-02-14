@@ -7,7 +7,7 @@ namespace toit.demos.api.csharp.pubsubpublish
 {
     public class Program
     {
-        private static string apikey = "<API Key Secret>"; // From: https://console.toit.io/project/apikeys
+        private static string apikey = "enter API key secret here"; // From: https://console.toit.io/project/apikeys
         static async Task Main(string[] args)
         {
             var callCredentials = CallCredentials.FromInterceptor((context, metadata) =>
