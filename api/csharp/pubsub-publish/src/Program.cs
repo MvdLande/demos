@@ -7,7 +7,9 @@ namespace toit.demos.api.csharp.pubsubpublish
 {
     public class Program
     {
-        private static string apikey = "enter API key secret here"; // From: https://console.toit.io/project/apikeys
+        // 
+        //private static string apikey = "enter API key secret here"; // From: https://console.toit.io/project/apikeys
+        private static string apikey = "xxxxxx"; // From: https://console.toit.io/project/apikeys
         static async Task Main(string[] args)
         {
             var callCredentials = CallCredentials.FromInterceptor((context, metadata) =>
@@ -21,15 +23,36 @@ namespace toit.demos.api.csharp.pubsubpublish
                 Credentials = channelCredentials
             });
 
-            var client = new Toit.Proto.API.PubSub.Publish.PublishClient(channel);
+            var publisher = new Toit.Proto.API.PubSub.Publish.PublishClient(channel);
 
             var request = new Toit.Proto.API.PubSub.PublishRequest
             {
                 Topic = "cloud:hello-world",
                 PublisherName = "C#",
-                Data = { ByteString.CopyFromUtf8("Hello world") }
+                Data = { ByteString.CopyFromUtf8("This is the message!") }
             };
-            await client.PublishAsync(request);
+            await publisher.PublishAsync(request);
+
+            // create a subscription
+
+            var subscriber = new Toit.Proto.API.PubSub.Subscribe.SubscribeClient(channel);
+
+            var subscription = new Toit.Proto.API.PubSub.Subscription
+            {
+                Topic = "cloud:hello-world",
+                Name = "C#"
+            };
+
+            var subscriptionrequest = new Toit.Proto.API.PubSub.CreateSubscriptionRequest 
+            { 
+                Subscription = subscription 
+            };
+
+            //var SubscriptionResponse = new Toit.Proto.API.PubSub.CreateSubscriptionResponse();
+
+            //SubscriptionResponse = subscriber.CreateSubscription(subscriptionrequest);
+            await subscriber.CreateSubscriptionAsync(subscriptionrequest);
+
         }
     }
 }
